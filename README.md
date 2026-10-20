@@ -1,0 +1,2 @@
+# Cellular-Network-Performance-Experiment
+Using tools and apps that track service performance, we can measure signal strength/speed at N fixed locations across M time points, compared against FCC/OpenCellID predicted coverage.
