@@ -149,6 +149,4 @@ Across the CSV, one RSRP value is missing, three bandwidth values are missing, 1
 - FCC coverage fields, modeled environments and thresholds: https://help.bdc.fcc.gov/hc/en-us/articles/6047425308187-Formatting-Mobile-Broadband-Availability-Coverage-Maps
 - FCC download/version guidance: https://help.bdc.fcc.gov/hc/en-us/articles/43909220634651-How-to-Download-Mobile-Broadband-Coverage-Data-from-the-FCC-s-National-Broadband-Map-Step-by-Step-Instructions
 
-License/redistribution permissions are not stated in the supplied attachments. Do not infer a dataset license from this README.
-
 
