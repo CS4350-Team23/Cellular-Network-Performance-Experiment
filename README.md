@@ -18,7 +18,6 @@ This dataset compares phone-observed cellular signal strength and connection per
 | FCC version | Internal layer vintage code D25; T-Mobile layer suffix 04may2026, Verizon suffix 04aug2026; details below |
 | Main gaps | R19 lacks a valid signal reading; R03 has an assumed date and hidden test details; R05 uses Wi-Fi; R20 is a failed test |
 | Missing collection metadata | Phone models, app versions, numerical GPS accuracy and explicit standing-still/movement status are not columns in the supplied CSV |
-| OpenCellID | No OpenCellID file, download date, or completed tower linkage is supplied |
 
 T-Mobile has six records on each visit. Verizon has two records on visit 1 and six on visit 2, including the failed repeat at S6. This is not a complete carrier-by-location-by-visit panel. Verizon has no records for S1 on either visit or S4-S6 on visit 1. The files do not establish whether every absent combination was planned.
 
