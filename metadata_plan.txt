@@ -1,1 +1,603 @@
+Each field reading will be recorded with the phone model, app version, carrier, network type, timestamp, GPS accuracy, and the condition it was taken in. Readings are planned outdoors while standing still, since that is one of the two conditions the FCC models, and any reading that has to be taken indoors will be flagged. The FCC data will be tracked by the map's "as of" date and last updated date, along with the technology and speed threshold used in each comparison. The OpenCellID download date will be noted too, as that database changes over time. Without these details, a gap between predicted and real coverage could come from the phone or the setting instead of the network itself. All of this metadata will be kept in a plain text file called metadata_plan.txt in the same folder as the data.
 
+
+PROJECT METADATA AND CURRENT COLLECTION RECORD
+
+Project title: Troy NY Cellular Field Readings and FCC Modeled Coverage
+Purpose: Compare observed cellular signal and connection performance with carrier-reported modeled coverage around Troy, New York, including the RPI area.
+Collectors: Jamie and Isabella, as recorded in the field CSV.
+Carriers: T-Mobile and Verizon.
+Study locations: 6 named spots (S1-S6).
+Collection visits: 2 (October 15 and October 20, 2026); individual readings were not simultaneous.
+Collection date range: 2026-10-15 through 2026-10-20. R03's date is assumed, not independently verified.
+Field records: 20 (12 T-Mobile and 8 Verizon).
+Quality flags: 14 Yes, 4 Review, 1 No, 1 Signal only.
+Completed cellular speed tests: 18 including Review records; 14 restricted to Yes.
+Timezone: America/New_York, corresponding to the CSV's Eastern Time labels. Original clock times are retained without a UTC conversion.
+Coordinates: Decimal degrees, WGS 84 / EPSG:4326. Latitude is north-positive and longitude west-negative.
+Spatial index: H3 resolution 9; 6 distinct indexes across all records.
+Keywords: cellular coverage, signal strength, dBm, download speed, upload speed, 4G LTE, 5G-NR, FCC National Broadband Map, OpenCellID, H3, WGS 84, ground truth, Troy NY, RPI, T-Mobile, Verizon.
+
+PLANNED METADATA VERSUS RECORDED METADATA
+
+Phone model, operating-system version, app names/versions, numerical GPS accuracy (meters), and stationary/moving status should be recorded for every new reading. These details are not recorded in the current CSV. Do not infer them from the collector, device appearance, or signal values.
+The speed-test source is the FCC app as identified in the CSV; its version is not recorded. The signal-dashboard and GPS app names/versions are not recorded in the CSV.
+The intended protocol is outdoor stationary collection. The CSV generally reports OUTDOOR, but this does not independently verify that the collector was standing still. R03's environment is not shown. No reading is explicitly flagged indoor in this CSV; that does not prove every reading met the planned protocol.
+For future indoor readings, explicitly record indoor, building/floor or setting when appropriate, and the reason for deviating from the protocol. Keep these readings separate from outdoor comparisons.
+For future readings, record separate location, signal and speed-test timestamps where available; they may differ.
+Unknown values must remain 'Not recorded' or missing rather than being guessed.
+
+FILES AND SOURCE PROVENANCE
+
+Field CSV: Cellular Readings - Combined T-Mobile + Verizon (Troy) - Untitled(1).csv
+Format: CSV; 20 rows and 33 fields.
+Collection method: Phone signal dashboards, GPS/location screenshots and FCC app tests, transcribed into a combined table with curator-assigned IDs, flags and notes.
+Source references: source_screenshot values such as Tab1 R1 and Tab2 R6. Combine these with collector/carrier because references are not unique across phones.
+Original screenshot evidence: Referenced by the CSV; not included in the latest five-file attachment set.
+README.md: Companion descriptions, data dictionary, file inventory and linking instructions.
+
+FCC COVERAGE PROVENANCE
+
+Source: FCC National Broadband Map, carrier-reported modeled mobile broadband coverage.
+Source portal: https://broadbandmap.fcc.gov/
+Exact source download URLs and download dates: Not recorded in the attached data.
+All four supplied layers cover New York (state code 36) and use WGS 84 / EPSG:4326.
+FCC vintage code: D25, retained verbatim from the internal layer names. This suggests a December 2025 reporting vintage; the exact availability 'as of' date is not explicitly stored as a human-readable date in the embedded metadata and must be confirmed from the original download record.
+FCC portal 'last updated' date: Not independently recorded. Do not equate it with a filename date, internal layer suffix, DBF update date or GeoPackage last_change timestamp.
+
+
+Carrier/technology: T-Mobile LTE
+File: fcc_mobile_coverage_20260804_tmobile_4glte(2).gpkg
+Internal layer/version: bdc_36_130403_4GLTE_mobile_broadband_h3_D25_04may2026
+Provider ID: 130403
+Technology code: 400
+Modeled speed threshold: 5 Mbps download / 1 Mbps upload
+GeoPackage last_change (UTC): 2026-05-12T22:48:01.511Z
+Embedded DBF last-update date: 2026-05-12
+
+
+Carrier/technology: T-Mobile 5G-NR
+File: fcc_mobile_coverage_20260804_tmobile_5gnr(3).gpkg
+Internal layer/version: bdc_36_130403_5GNR_35_3_mobile_broadband_h3_D25_04may2026
+Provider ID: 130403
+Technology code: 500
+Modeled speed threshold: 35 Mbps download / 3 Mbps upload
+GeoPackage last_change (UTC): 2026-05-12T23:51:15.114Z
+Embedded DBF last-update date: 2026-05-12
+
+
+Carrier/technology: Verizon LTE
+File: bdc_36_131425_4GLTE_mobile_broadband_h3_D25_04aug2026(1).gpkg
+Internal layer/version: bdc_36_131425_4GLTE_mobile_broadband_h3_D25_04aug2026
+Provider ID: 131425
+Technology code: 400
+Modeled speed threshold: 5 Mbps download / 1 Mbps upload
+GeoPackage last_change (UTC): 2026-08-05T22:19:19.299Z
+Embedded DBF last-update date: 2026-08-05
+
+
+Carrier/technology: Verizon 5G-NR
+File: bdc_36_131425_5GNR_35_3_mobile_broadband_h3_D25_04aug2026(1).gpkg
+Internal layer/version: bdc_36_131425_5GNR_35_3_mobile_broadband_h3_D25_04aug2026
+Provider ID: 131425
+Technology code: 500
+Modeled speed threshold: 35 Mbps download / 3 Mbps upload
+GeoPackage last_change (UTC): 2026-08-05T22:31:06.727Z
+Embedded DBF last-update date: 2026-08-05
+
+
+The outer T-Mobile filenames contain 20260804, while their internal layers retain 04may2026 and May 12 modification dates. Preserve all these values without treating them as interchangeable dates. Use the corrected New York Verizon files above; the earlier Alabama Verizon files are not appropriate for this study.
+
+OPENCELLID PROVENANCE
+
+OpenCellID is planned supplementary network/site context. No OpenCellID download or completed tower linkage is supplied.
+OpenCellID download date: Not recorded.
+OpenCellID source URL/export identifier, schema, license and database version: Not recorded.
+When adding OpenCellID, record the download date, geographic filter, file/version, field definitions and linking method. Validate radio technology and network identifiers alongside cell ID; a cell ID alone is not a globally unique tower identifier. Do not invent tower coordinates or distances.
+
+FIELD DEFINITIONS, UNITS AND ORIGIN
+
+FIELD-OBSERVED / PHONE-REPORTED:
+carrier: phone/dashboard carrier identity; retain any conflicting app network name in notes.
+date: collection date; R03 is a curated assumption and remains labeled '(assumed)'.
+signal_time_et, fcc_test_time_et: separate clock times in HH:MM, Eastern Time.
+latitude, longitude: GPS position in decimal degrees; preserve row-specific precision.
+network_type: interpreted connection description based on app/dashboard evidence; not a modeled map technology.
+signal_tech_shown: LTE or 5G NR technology shown for signal metrics.
+band: displayed band identifier, e.g. B12, B66, n41, n77 or n5.
+bandwidth_mhz: displayed bandwidth in MHz.
+cell_id: phone-reported cellular cell identifier; preserve as an identifier.
+pci: physical cell identity; not globally unique.
+rsrp_dbm: measured/reported reference signal received power, dBm.
+rsrq_db: measured/reported reference signal received quality, dB.
+snr_sinr_db: labeled SNR/SINR values, dB; text can contain two streams and must not be treated as one numeric variable without parsing.
+fcc_test_id: FCC app test identifier.
+fcc_connected_type, fcc_test_type, fcc_environment: app-reported connection, test category and environment.
+latency_ms, jitter_ms: measured test latency and jitter, milliseconds.
+packet_loss_pct: observed packet loss, percent from 0 to 100.
+download_mbps, upload_mbps: observed test rates, Mbps. R20's zero speeds indicate a failed test.
+
+CURATED / DERIVED COLLECTION METADATA:
+reading_id: unique observation ID R01-R20.
+spot_id: project location ID S1-S6; not an FCC broadband location ID.
+spot_name: sampling-location label; retain address uncertainty in notes.
+visit_no: session 1 or 2, not an exact common timestamp.
+collected_by: collector identity.
+h3_index_res9: H3 resolution-9 spatial index associated with the recorded position.
+include_in_comparison: Yes, Review, No or Signal only; an assessment of intended analytical use.
+notes: source qualifications and quality observations; some statements are collector/curator interpretations.
+source_screenshot: provenance reference to screenshot evidence.
+
+COVERAGE-MAP FIELDS (MAP-SOURCED, NOT FIELD MEASUREMENTS):
+fid: feature ID local to its map layer.
+geom: map polygon geometry, WGS 84 / EPSG:4326.
+frn: FCC Registration Number supplied by the coverage source.
+providerid, brandname: map carrier identifiers.
+technology: 400 = 4G LTE; 500 = 5G-NR.
+mindown, minup: modeled minimum download/upload speed thresholds, Mbps; not exact predictions of each phone test.
+minsignal: modeled polygon minimum RSRP, dBm for these LTE/5G-NR layers; not a directly measured phone value.
+environmnt: 0 = outdoor stationary only; 1 = outdoor stationary and in-vehicle mobile. Neither code denotes indoor coverage.
+h3_res9_id: coverage-map H3 resolution-9 identifier.
+
+FILE LINKING AND TRANSFORMATIONS
+
+Link repeated observations using spot_id while preserving reading_id, carrier, visit_no, date and separate capture times. Link field h3_index_res9 to map h3_res9_id, selecting the matching provider and technology. Verify with point-in-polygon matching where needed, using x = longitude and y = latitude.
+S1: 377 Congress St; H3 892b89155c3ffff.
+S2: 1641 15th St; H3 892b89155d3ffff, with R18 in adjacent 892b89154a7ffff.
+S3: Sage Ave near 1145; H3 892b89154b7ffff.
+S4: 1401 Sage Ave; H3 892b89154b7ffff.
+S5: Sunset Terrace; H3 892b8917373ffff.
+S6: 1990 Burdett Ave; H3 892b8917363ffff.
+Two named spots can share an H3 cell and one named spot can span two cells. H3 alone is not a unique field-record key.
+Compare LTE anchor RSRP with LTE modeled signal even when the speed-test connection is labeled 5G NSA. Compare 5G NR RSRP with the 5G-NR layer. Keep Wi-Fi speed results separate from cellular coverage comparisons.
+Use explicit modeled_ prefixes for map attributes appended to field records. Retain the source map filename, internal layer/version, join method, selected environment and exclusions with every derived table.
+Coordinates in the CSV already use negative west longitude. If preparing data from N/W screenshot labels, record any sign conversion and retain the original source evidence.
+
+QUALITY AND MISSING-DATA RULES
+
+Blank cells mean missing/not recorded, not zero. 'Not shown' means the original display did not provide the value. Preserve assumed dates and their qualifiers.
+Yes: eligible under current curation, but still inspect notes for limitations.
+Review: requires scrutiny before inclusion; report sensitivity to excluding these records.
+No: R05 uses Wi-Fi and is excluded from cellular speed comparisons.
+Signal only: R20 provides a usable LTE signal observation and failed-connectivity evidence, not a completed speed result.
+R02: SINR -20.0 on both streams may be a floor value; LTE anchor is displayed.
+R03: assumed date, hidden test ID/environment and additional 5G signal values in notes; the main RSRP column is LTE.
+R18: carrier/network-name discrepancy, delayed collection and an adjacent H3 cell.
+R19: valid S1 signal observation was missed; the reused S2 screenshot must not be assigned to S1.
+R20: failed Challenge test, no test ID and 100% packet loss; do not average its zeros into completed-speed statistics.
+R04: screenshot address differs slightly from the named spot; use the recorded coordinates.
+R10: signal screenshot showed Wi-Fi, while the later speed test explicitly used mobile; preserve both capture times.
+R13, R15 and R17: unusual/low speed values are retained; these observations alone do not demonstrate transcription errors.
+Current missing measurements: one RSRP, three bandwidth values, 13 RSRQ values, two test IDs, one signal capture time and one latency/jitter pair.
+There is no explicit indoor flag in these records. A complete matched carrier/location/visit panel was not obtained: Verizon has no S1 records on either visit or S4-S6 records on visit 1; whether each absent combination was planned is not documented.
+
+PROCESSING AND CHANGE HISTORY
+
+The source CSV is a transcription/compilation of phone screenshot evidence with assigned IDs, source references, H3 indexes and quality flags. Its full transcription date, software versions and original H3-generation method are not recorded.
+This metadata file expands the original collection plan using the supplied CSV and the four corrected New York coverage files. Source measurements have not been changed by this metadata update.
+For each future correction or derived output, record: change date/time and timezone; editor; input filename/version; affected reading IDs; original and replacement values; reason; processing method/software; join rules; exclusions; output filename/version.
+Keep original source files unchanged and save processed/joined results separately. Keep this metadata_plan.txt beside the data and maintain README.md as the dataset overview.
+
+PER-READING COLLECTION METADATA
+
+Common unknowns for every entry below: phone model, operating system, signal/GPS app versions, FCC app version, GPS accuracy (meters), exact GPS capture time, and stationary/moving status are Not recorded in the current CSV. Environment below is the app-reported value, not independently verified protocol compliance.
+
+
+reading_id: R01
+location_id: S1
+location_name: 377 Congress St
+visit_no: 1
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-15
+signal_time: 22:55
+speed_test_time: 22:49
+timezone: America/New_York
+latitude: 42.72275
+longitude: -73.67962
+h3_resolution_9: 892b89155c3ffff
+network_type: 5G NR NSA (per FCC app)
+signal_technology: LTE
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: Signal screen shows LTE (anchor) while FCC app reports NR NSA; weak signal; location 4 min before signal screen
+source_screenshot: Tab1 R1
+
+
+reading_id: R02
+location_id: S2
+location_name: 1641 15th St (RPI)
+visit_no: 1
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-15
+signal_time: 23:10
+speed_test_time: 23:11
+timezone: America/New_York
+latitude: 42.72789
+longitude: -73.67807
+h3_resolution_9: 892b89155d3ffff
+network_type: 5G NR NSA (per FCC app)
+signal_technology: LTE
+app_reported_environment: OUTDOOR
+quality_flag: Review
+quality_note: SINR -20.0 on both streams looks like a floor value; signal screen shows LTE anchor only
+source_screenshot: Tab1 R2
+
+
+reading_id: R03
+location_id: S2
+location_name: 1641 15th St (RPI)
+visit_no: 1
+collector: Isabella
+carrier: Verizon
+collection_date: 2026-10-15 (assumed)
+signal_time: 23:10
+speed_test_time: 23:09
+timezone: America/New_York
+latitude: 42.72789
+longitude: -73.67807
+h3_resolution_9: 892b89155d3ffff
+network_type: 5G (5G UW icon)
+signal_technology: LTE
+app_reported_environment: not shown
+quality_flag: Review
+quality_note: FCC Test Details panel collapsed: no Test ID/date/environment; date assumed from Jamie same night; upload > download is unusual; 5G section also shows RSRP -103 dBm RSRQ -11 dB PCI 94
+source_screenshot: Tab1 R2
+
+
+reading_id: R04
+location_id: S3
+location_name: Sage Ave near 1145 (RPI)
+visit_no: 1
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-15
+signal_time: 23:21
+speed_test_time: 23:22
+timezone: America/New_York
+latitude: 42.73114
+longitude: -73.67903
+h3_resolution_9: 892b89154b7ffff
+network_type: 5G NR SA/NSA (FCC: NRSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: Location screenshot says 1108 Sage Ave (about 13 m from the 1145 Sage Ave point)
+source_screenshot: Tab1 R3
+
+
+reading_id: R05
+location_id: S3
+location_name: Sage Ave near 1145 (RPI)
+visit_no: 1
+collector: Isabella
+carrier: Verizon
+collection_date: 2026-10-15
+signal_time: 23:20
+speed_test_time: 23:19
+timezone: America/New_York
+latitude: 42.73102
+longitude: -73.67903
+h3_resolution_9: 892b89154b7ffff
+network_type: Wi-Fi (not cellular)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: No
+quality_note: FCC speed test ran on RPI Wi-Fi, not cellular; speeds cannot be compared to coverage. Dashboard RSRP is still a cellular reading, but Wi-Fi icon was on
+source_screenshot: Tab1 R3
+
+
+reading_id: R06
+location_id: S4
+location_name: 1401 Sage Ave (RPI)
+visit_no: 1
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-15
+signal_time: 23:26
+speed_test_time: 23:25
+timezone: America/New_York
+latitude: 42.73065
+longitude: -73.6769
+h3_resolution_9: 892b89154b7ffff
+network_type: 5G NR SA/NSA (FCC: NRSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: No additional note recorded
+source_screenshot: Tab1 R4
+
+
+reading_id: R07
+location_id: S5
+location_name: Sunset Terr (RPI)
+visit_no: 1
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-15
+signal_time: 23:37
+speed_test_time: 23:37
+timezone: America/New_York
+latitude: 42.73136
+longitude: -73.66659
+h3_resolution_9: 892b8917373ffff
+network_type: 5G NR SA/NSA (FCC: NRSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: No additional note recorded
+source_screenshot: Tab1 R5
+
+
+reading_id: R08
+location_id: S6
+location_name: 1990 Burdett Ave
+visit_no: 1
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-15
+signal_time: 23:52
+speed_test_time: 23:51
+timezone: America/New_York
+latitude: 42.72924
+longitude: -73.67248
+h3_resolution_9: 892b8917363ffff
+network_type: 5G NR SA/NSA (FCC: NRSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: No additional note recorded
+source_screenshot: Tab1 R6
+
+
+reading_id: R09
+location_id: S3
+location_name: Sage Ave near 1145 (RPI)
+visit_no: 2
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-20
+signal_time: 12:06
+speed_test_time: 12:04
+timezone: America/New_York
+latitude: 42.73095
+longitude: -73.679
+h3_resolution_9: 892b89154b7ffff
+network_type: 5G NR NSA (per FCC app)
+signal_technology: LTE
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: Signal screen shows LTE anchor (B12) with B66 20 MHz secondary
+source_screenshot: Tab2 R1
+
+
+reading_id: R10
+location_id: S3
+location_name: Sage Ave near 1145 (RPI)
+visit_no: 2
+collector: Isabella
+carrier: Verizon
+collection_date: 2026-10-20
+signal_time: 12:03
+speed_test_time: 12:06
+timezone: America/New_York
+latitude: 42.73101
+longitude: -73.67903
+h3_resolution_9: 892b89154b7ffff
+network_type: 5G NR (FCC: Verizon Business NRSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: Signal screen taken 3 min before the speed test and shows Wi-Fi icon on; speed test itself ran on mobile
+source_screenshot: Tab2 R1
+
+
+reading_id: R11
+location_id: S5
+location_name: Sunset Terr (RPI)
+visit_no: 2
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-20
+signal_time: 12:19
+speed_test_time: 12:18
+timezone: America/New_York
+latitude: 42.73135
+longitude: -73.66655
+h3_resolution_9: 892b8917373ffff
+network_type: 5G NR SA/NSA (FCC: NRNSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: No additional note recorded
+source_screenshot: Tab2 R2
+
+
+reading_id: R12
+location_id: S5
+location_name: Sunset Terr (RPI)
+visit_no: 2
+collector: Isabella
+carrier: Verizon
+collection_date: 2026-10-20
+signal_time: 12:18
+speed_test_time: 12:18
+timezone: America/New_York
+latitude: 42.73141
+longitude: -73.66656
+h3_resolution_9: 892b8917373ffff
+network_type: 5G NR (FCC: Verizon Business NRSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: No additional note recorded
+source_screenshot: Tab2 R2
+
+
+reading_id: R13
+location_id: S4
+location_name: 1401 Sage Ave (RPI)
+visit_no: 2
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-20
+signal_time: 12:27
+speed_test_time: 12:26
+timezone: America/New_York
+latitude: 42.73072
+longitude: -73.67678
+h3_resolution_9: 892b89154b7ffff
+network_type: 5G NR (FCC: NRNSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: Location screenshot shows "Near Sage Ave" with no street number; upload > download is unusual with -74 dBm
+source_screenshot: Tab2 R3
+
+
+reading_id: R14
+location_id: S4
+location_name: 1401 Sage Ave (RPI)
+visit_no: 2
+collector: Isabella
+carrier: Verizon
+collection_date: 2026-10-20
+signal_time: 12:26
+speed_test_time: 12:27
+timezone: America/New_York
+latitude: 42.73067
+longitude: -73.67678
+h3_resolution_9: 892b89154b7ffff
+network_type: 5G NR (FCC: Verizon Business NRSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: No additional note recorded
+source_screenshot: Tab2 R3
+
+
+reading_id: R15
+location_id: S6
+location_name: 1990 Burdett Ave
+visit_no: 2
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-20
+signal_time: 12:39
+speed_test_time: 12:38
+timezone: America/New_York
+latitude: 42.72925
+longitude: -73.67247
+h3_resolution_9: 892b8917363ffff
+network_type: 5G NR (FCC: NRNSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: Download 54 Mbps is low for 5G n41 at -92 dBm
+source_screenshot: Tab2 R4
+
+
+reading_id: R16
+location_id: S6
+location_name: 1990 Burdett Ave
+visit_no: 2
+collector: Isabella
+carrier: Verizon
+collection_date: 2026-10-20
+signal_time: 12:38
+speed_test_time: 12:38
+timezone: America/New_York
+latitude: 42.72922
+longitude: -73.67246
+h3_resolution_9: 892b8917363ffff
+network_type: 5G NR (FCC: Verizon Business NRSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: No additional note recorded
+source_screenshot: Tab2 R4
+
+
+reading_id: R17
+location_id: S2
+location_name: 1641 15th St (RPI)
+visit_no: 2
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-20
+signal_time: 12:51
+speed_test_time: 12:50
+timezone: America/New_York
+latitude: 42.72788
+longitude: -73.67812
+h3_resolution_9: 892b89155d3ffff
+network_type: 5G NR NSA (FCC: NRSA)
+signal_technology: LTE
+app_reported_environment: OUTDOOR
+quality_flag: Yes
+quality_note: Download 2.49 Mbps despite -71 dBm LTE; signal screen shows LTE anchor
+source_screenshot: Tab2 R5
+
+
+reading_id: R18
+location_id: S2
+location_name: 1641 15th St (RPI)
+visit_no: 2
+collector: Isabella
+carrier: Verizon
+collection_date: 2026-10-20
+signal_time: 15:52
+speed_test_time: 15:52
+timezone: America/New_York
+latitude: 42.72792
+longitude: -73.67815
+h3_resolution_9: 892b89154a7ffff
+network_type: 5G NR (FCC: network named RPI NRSA)
+signal_technology: 5G NR
+app_reported_environment: OUTDOOR
+quality_flag: Review
+quality_note: Taken ~3 h after Jamie at this spot; FCC app lists the mobile network as "Rensselaer Polytechnic Institute" not Verizon, though dashboard shows Verizon (PLMN 311 480); location screenshot (15:54) has Wi-Fi on
+source_screenshot: Tab2 R5
+
+
+reading_id: R19
+location_id: S1
+location_name: 377 Congress St
+visit_no: 2
+collector: Jamie
+carrier: T-Mobile
+collection_date: 2026-10-20
+signal_time: Not recorded
+speed_test_time: 12:55
+timezone: America/New_York
+latitude: 42.72276
+longitude: -73.67957
+h3_resolution_9: 892b89155c3ffff
+network_type: 5G NR NSA (per FCC app)
+signal_technology: Not recorded
+app_reported_environment: OUTDOOR
+quality_flag: Review
+quality_note: No signal values: the Tab 2 Reading 6 signal screenshot is time-stamped 12:51 and is identical to Reading 5 (12:50 at 1641 15th St), so it is not a reading for this spot. Retake the dBm reading here
+source_screenshot: Tab2 R6
+
+
+reading_id: R20
+location_id: S6
+location_name: 1990 Burdett Ave
+visit_no: 2
+collector: Isabella
+carrier: Verizon
+collection_date: 2026-10-20
+signal_time: 12:53
+speed_test_time: 12:54
+timezone: America/New_York
+latitude: 42.72922
+longitude: -73.67246
+h3_resolution_9: 892b8917363ffff
+network_type: LTE only, weak (no internet)
+signal_technology: LTE
+app_reported_environment: OUTDOOR
+quality_flag: Signal only
+quality_note: Repeat at 1990 Burdett Ave 16 min after reading 4; phone shows "No Internet Connection", 1 bar; Challenge test failed (100% loss, no Test ID). Signal values usable, speed values are a failed test
+source_screenshot: Tab2 R6
