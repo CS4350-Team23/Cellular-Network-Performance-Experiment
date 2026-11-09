@@ -11,31 +11,36 @@ This dataset compares phone-observed cellular signal strength and connection per
 | Date range | 2026-10-15 through 2026-10-20; R03's October 15 date is assumed |
 | Observation times | Eastern Time as labeled by the CSV's `*_et` columns; combine each clock time with its row date |
 | Field records | 20: 12 T-Mobile and 8 Verizon |
-| Record status | 14 Yes; 4 Review; 1 Signal only (failed test) |
+| Record status | 14 Yes; 4 Review; 1 No; 1 Signal only (failed test) |
 | Completed cellular speed tests | 18 when Review records are retained; 14 when restricted to Yes |
 | Spatial index | 6 distinct H3 resolution-9 indexes across all rows; not equivalent to 6 independent hexagonal sampling areas |
 | Coordinate system | Decimal-degree latitude/longitude; coverage polygons use WGS 84 / EPSG:4326 |
 | FCC version | Internal layer vintage code D25; T-Mobile layer suffix 04may2026, Verizon suffix 04aug2026; details below |
 | Main gaps | R19 lacks a valid signal reading; R03 has an assumed date and hidden test details; R05 uses Wi-Fi; R20 is a failed test |
-| Missing collection metadata | Phone models, app versions, numerical GPS accuracy and explicit standing-still/movement status are not columns in the supplied CSV |
+| Missing collection metadata | Numerical GPS accuracy and explicit standing-still/movement status are not columns in the supplied CSV; phone model, iOS version and app version are recorded in `collection_metadata.csv` |
 
 T-Mobile has six records on each visit. Verizon has two records on visit 1 and six on visit 2, including the failed repeat at S6. This is not a complete carrier-by-location-by-visit panel. Verizon has no records for S1 on either visit or S4-S6 on visit 1. The files do not establish whether every absent combination was planned.
 
 ## Files in this release
 
-Keep this README beside these five source files. Numbered suffixes are part of the attached filenames; they are not analytical version numbers.
+Keep this README beside these six source files. Numbered suffixes are part of the attached filenames; they are not analytical version numbers.
 
 | Filename | Contents | Provenance |
 |---|---|---|
 | `Cellular Readings - Combined T-Mobile + Verizon (Troy).csv` | 20 rows and 33 fields: field measurements, collection context, H3 identifiers, source references and quality flags | Field-observed values transcribed from phone screenshots, plus curator-assigned/derived metadata |
+| `collection_metadata.csv` | 2 rows: collector, carrier, phone model, iOS version, signal source, FCC app and version | Recorded by each collector; compiled by the team |
 | `fcc_mobile_coverage_20260804_tmobile_4glte.gpkg` | New York T-Mobile LTE; 664,054 polygon records; provider 130403; technology 400; 5/1 Mbps threshold | Coverage-map data; modeled |
 | `fcc_mobile_coverage_20260804_tmobile_5gnr.gpkg` | New York T-Mobile 5G-NR; 394,706 polygon records; provider 130403; technology 500; 35/3 Mbps threshold | Coverage-map data; modeled |
-| ``fcc_mobile_coverage_20260804_verizon_5gnr.gpkg`` | New York Verizon 5G-NR; 289,378 polygon records; provider 131425; technology 500; 35/3 Mbps threshold | Coverage-map data; modeled |
-| ``fcc_mobile_coverage_20260804_verizon_4glte.gpkg`` | New York Verizon LTE; 1,077,746 polygon records; provider 131425; technology 400; 5/1 Mbps threshold | Coverage-map data; modeled |
+| `fcc_mobile_coverage_20260804_verizon_5gnr.gpkg` | New York Verizon 5G-NR; 289,378 polygon records; provider 131425; technology 500; 35/3 Mbps threshold | Coverage-map data; modeled |
+| `fcc_mobile_coverage_20260804_verizon_4glte.gpkg` | New York Verizon LTE; 1,077,746 polygon records; provider 131425; technology 400; 5/1 Mbps threshold | Coverage-map data; modeled |
 
-Each GeoPackage contains one feature layer. Polygon record counts describe each supplied statewide file, not counts of field locations or population covered. These are the corrected New York Verizon files; do not substitute the earlier Alabama files.
+Each GeoPackage contains one feature layer. Polygon record counts describe each supplied statewide file, not counts of field locations or population covered. These are the corrected New York Verizon files.
 
-A separately created `metadata_plan.txt` describes intended collection metadata. It is a plan, not evidence that missing device, app or GPS-accuracy metadata have already been collected.
+A separately created `metadata_plan.txt` describes intended collection metadata. It is a plan, not evidence of what was collected. Device and app details that were recorded are in `collection_metadata.csv`; numerical GPS accuracy has already been collected.
+
+## Collection method
+
+Signal readings (RSRP, RSRQ, SINR, band, cell ID) were read from the iPhone's built-in Field Test Mode (dialer code `*3001#12345*#`). Speed, latency, jitter and packet loss came from the FCC speed test app. Isabella collected the Verizon readings on an iPhone 14. Jamie collected the T-Mobile readings on an iPhone 13.
 
 ## FCC dates and version provenance
 
@@ -104,6 +109,18 @@ Origin labels: **FIELD** = observed/reported by the phone, GPS or test app; **CU
 | `source_screenshot` | CURATED provenance | Source reference such as Tab1 R1; combine with collector/carrier to disambiguate |
 
 Blank cells mean missing/not recorded, not zero. Literal `not shown` means the source did not display that information. Do not remove the "(assumed)" qualifier from R03's date without retaining an assumption flag. Phone model, app version and numerical GPS accuracy are unknown from this CSV.
+
+## Collection metadata CSV data dictionary
+
+| Field | Origin | Meaning |
+|---|---|---|
+| `collected_by` | CURATED | Collector: Isabella (Verizon) / Jamie (T-Mobile) |
+| `carrier` | CURATED | Carrier measured by that collector |
+| `phone_model` | CURATED | iPhone model used for the readings |
+| `ios_version` | CURATED | iOS version on the phone |
+| `signal_source` | CURATED | How signal values were read (iOS Field Test Mode) |
+| `speed_test_app` | CURATED | App used for speed, latency, jitter and packet loss |
+| `speed_test_app_version` | CURATED | Version of that app |
 
 ## Coverage-map data dictionary
 
