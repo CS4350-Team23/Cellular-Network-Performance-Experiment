@@ -1,0 +1,3 @@
+collected_by,carrier,phone_model,ios_version,signal_source,speed_test_app,speed_test_app_version
+Isabella,Verizon,iPhone 14,26.6.2,iOS Field Test Mode (dialer code *3001#12345*#),FCC Speed Test,5.1.0
+Jamie,T-Mobile,iPhone 13,26.6.2,iOS Field Test Mode (dialer code *3001#12345*#),FCC Speed Test,5.1.0
